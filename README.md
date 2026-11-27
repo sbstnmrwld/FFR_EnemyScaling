@@ -17,6 +17,7 @@ No area becomes trivial. Every enemy and boss below your party's level is raised
 - Enemies are only ever raised, never lowered.
 - A raised enemy's stats (HP, break gauge, attack, defence, magic, spirit, speed) grow by the ratio of a typical vanilla enemy's stats at the old and the new level. An enemy that was tough for its level stays tough for its new level. Normal enemies and bosses each have their own curve.
 - **Not scaled:** the Colosseum, the fights 700 years ago, and scripted fights you are meant to lose.
+- The game's difficulty still applies on top: on Expert, enemies have 1.6× the HP and break gauge of the scaled values, as they would in vanilla.
 - Changes happen on the map, never during a battle. Nothing is written into your save. When you remove the mod or switch it off, every enemy is back to the game's own values.
 
 You change the settings in the game (main menu → **Mods** → **Enemy Scaling**), and they work with a controller. They are saved in `config.ini` next to the plugin.
@@ -44,6 +45,11 @@ Do not use it together with another mod that changes enemy levels (such as Dynam
 - **Curves:** `curves.lua` holds the typical stat per level 1–99, fitted from all enemy rows of the game (`tools/curves.pl`, robust piecewise-linear fit of the log of each stat over level).
 - **Excluded fights:** found in `DT_BattleGroup`: groups 700–799 (700 years ago), 9700–9799 (Colosseum ranks), the Colosseum's boss events, fights whose lose event is the same as their win event, and any fight on a Colosseum map. Enemies that appear only in such fights are never scaled. When such a fight starts with enemies it shares with other fights, all rows go back to the game's values for that battle (`CPP_BFL_Battle.GetEncountBattleGroupdId`).
 
+## Known limitations
+
+- **Colosseum not tested yet.** Leaving the Colosseum fights alone is built in, but it has not been checked in the game yet ([#1](https://github.com/sbstnmrwld/FFR_EnemyScaling/issues/1), [#2](https://github.com/sbstnmrwld/FFR_EnemyScaling/issues/2), [#3](https://github.com/sbstnmrwld/FFR_EnemyScaling/issues/3)). Some Colosseum fights may still be scaled until then.
+- Enemy levels only change on the map. If your party levels up during a battle, the enemies of the next battle get the new level.
+
 ## Credits
 
 Inspired by [Dynamic Boss Level Scaling](https://www.nexusmods.com/finalfantasyresonance/mods/307), which scales story bosses. This plugin is written from scratch: its own code, its own curves fitted from the game's data and its own choice of fights.
@@ -52,7 +58,7 @@ Inspired by [Dynamic Boss Level Scaling](https://www.nexusmods.com/finalfantasyr
 
 This mod was made by sbstnmrwld with the help of AI: [Claude Code](https://claude.com/claude-code) by Anthropic.
 
-- **AI-generated:** the Lua code, the stat curves and the script that fits them, the menu translations in `lang/` and this README, written by Claude based on sbstnmrwld's design and requests.
+- **AI-generated:** the Lua code, the analysis of the game's data (which fights to leave alone, which enemies count as bosses), the stat curves and the script that fits them, the menu translations in `lang/`, this README and the texts of the issues and pull requests, written by Claude based on sbstnmrwld's design and requests.
 - **Done by a human:** the feature design, decisions and testing in the game, all by sbstnmrwld.
 - **Not included:** AI-generated images, audio, voices or models. The mod only uses the game's own data and visuals.
 
